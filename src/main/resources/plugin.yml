@@ -1,0 +1,9 @@
+name: MurderUiShop
+main: name.murderuishop.MurderUiShop
+version: "1.0.0"
+api:
+  - 1.0.0
+load: POSTWORLD
+author: lt_name
+loadbefore:
+  - MurderMystery
