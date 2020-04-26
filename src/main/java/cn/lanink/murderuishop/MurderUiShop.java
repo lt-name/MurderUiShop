@@ -1,7 +1,12 @@
-package name.murderuishop;
+package cn.lanink.murderuishop;
 
+import cn.lanink.murdermystery.api.Api;
+import cn.lanink.murdermystery.event.MurderRoomStartEvent;
+import cn.lanink.murdermystery.ui.GuiCreate;
+import cn.lanink.murdermystery.utils.Tools;
 import cn.nukkit.Player;
 import cn.nukkit.event.EventHandler;
+import cn.nukkit.event.EventPriority;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerFormRespondedEvent;
 import cn.nukkit.event.player.PlayerInteractEvent;
@@ -15,10 +20,6 @@ import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.scheduler.AsyncTask;
 import cn.nukkit.scheduler.Task;
 import cn.nukkit.utils.Config;
-import name.murdermystery.api.Api;
-import name.murdermystery.event.MurderRoomStartEvent;
-import name.murdermystery.ui.GuiCreate;
-import name.murdermystery.utils.Tools;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -48,16 +49,20 @@ public class MurderUiShop extends PluginBase implements Listener {
         this.cache.clear();
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void onRoomStart(MurderRoomStartEvent event) {
-        if (event.getRoom() == null) return;
-        Item item = Item.get(347, 0, 1);
-        item.setNamedTag(new CompoundTag().putBoolean("isMurderUiShop", true));
-        item.setCustomName("§a道具商店");
-        item.setLore("便携道具商店", "购买各种道具来帮助你获取胜利！");
-        for (Player player : event.getRoom().getPlayers().keySet()) {
-            player.getInventory().addItem(item);
-        }
+        getServer().getScheduler().scheduleDelayedTask(this, new Task() {
+            @Override
+            public void onRun(int i) {
+                Item item = Item.get(347, 0, 1);
+                item.setNamedTag(new CompoundTag().putBoolean("isMurderUiShop", true));
+                item.setCustomName("§a道具商店");
+                item.setLore("便携道具商店", "购买各种道具来帮助你获取胜利！");
+                for (Player player : event.getRoom().getPlayers().keySet()) {
+                    player.getInventory().addItem(item);
+                }
+            }
+        },20);
     }
 
     @EventHandler

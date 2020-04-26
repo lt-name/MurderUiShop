@@ -1,6 +1,6 @@
 name: MurderUiShop
-main: name.murderuishop.MurderUiShop
-version: "1.0.0"
+main: cn.lanink.murderuishop.MurderUiShop
+version: "1.0.2"
 api:
   - 1.0.0
 load: POSTWORLD
